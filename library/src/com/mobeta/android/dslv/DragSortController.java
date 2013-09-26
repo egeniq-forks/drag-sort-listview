@@ -429,7 +429,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
     public boolean onSingleTapUp(MotionEvent ev) {
         if (mRemoveEnabled && mRemoveMode == CLICK_REMOVE) {
             if (mClickRemoveHitPos != MISS) {
-                mDslv.removeItem(mClickRemoveHitPos - mDslv.getHeaderViewsCount());
+                mDslv.confirmRemoveItem(mClickRemoveHitPos - mDslv.getHeaderViewsCount());
             }
         }
         return true;

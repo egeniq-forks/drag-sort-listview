@@ -21,6 +21,11 @@
 
 package com.mobeta.android.dslv;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
@@ -43,11 +48,6 @@ import android.widget.BaseAdapter;
 import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * ListView subclass that mediates drag and drop resorting of items.
@@ -1401,6 +1401,12 @@ public class DragSortListView extends ListView {
         }
     }
 
+    public void confirmRemoveItem(int which) {
+        if (mRemoveListener != null) {
+            mRemoveListener.remove(which);
+        }
+    }
+
     public void removeItem(int which) {
 
         mUseRemoveVelocity = false;
@@ -1530,11 +1536,6 @@ public class DragSortListView extends ListView {
         // must set to avoid cancelDrag being called from the
         // DataSetObserver
         mDragState = REMOVING;
-
-        // end it
-        if (mRemoveListener != null) {
-            mRemoveListener.remove(which);
-        }
 
         destroyFloatView();
 
@@ -2521,6 +2522,9 @@ public class DragSortListView extends ListView {
      * relies on a redraw of all the items to recover invisible views
      * and such. Strictly speaking, if you remove something, your dataset
      * has changed...
+     * <p>
+     * Doesn't remove item anymore.
+     * You have to call {@link DragSortListView#removeItem(int)} yourself !!!
      * 
      * @param l
      */
